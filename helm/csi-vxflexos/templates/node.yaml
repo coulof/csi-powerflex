@@ -280,37 +280,6 @@ spec:
             - name: udev-d
               mountPath: /rules.d
         {{- end }}
-      initContainers:
-        - name: sdc
-          securityContext:
-            privileged: true
-          image: {{ required "Must provide the PowerFlex SDC container image." .Values.images.powerflexSdc }}
-          imagePullPolicy: {{ .Values.imagePullPolicy }}
-          env:
-            - name: NODENAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: spec.nodeName
-            - name: MODE
-              value: "config"
-            - name: MDM
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-config
-                  key: MDM
-            - name: HOST_DRV_CFG_PATH
-              value: /opt/emc/scaleio/sdc/bin
-          volumeMounts:
-            - name: dev
-              mountPath: /dev
-            - name: os-release
-              mountPath: /host-os-release
-            - name: sdc-storage
-              mountPath: /storage 
-            - name: udev-d
-              mountPath: /rules.d
-            - name: scaleio-path-opt
-              mountPath: /host_drv_cfg_path 
       volumes:
         - name: registration-dir
           hostPath:
