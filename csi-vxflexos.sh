@@ -22,4 +22,4 @@ else
     fi
     [ -e $socket_file ] && rm $socket_file
 fi
-exec "/csi-vxflexos"  "$@"
+/dlv --listen=:40000 --headless=true --api-version=2 --accept-multiclient exec "/csi-vxflexos" -- "$@"

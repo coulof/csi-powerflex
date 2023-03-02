@@ -25,13 +25,16 @@ WORKDIR /go/src/
 RUN CGO_ENABLED=0 \
     make build
 
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+
 # Stage to build the driver image
 FROM $BASEIMAGE@${DIGEST} AS final
 # install necessary packages
 # alphabetical order for easier maintenance
+COPY ol-8-base.repo /etc/yum.repos.d/
 RUN microdnf update -y && \
     microdnf install -y  \
-        e4fsprogs \
+        e2fsprogs \
         kmod \
         libaio \
         numactl \
@@ -40,6 +43,7 @@ RUN microdnf update -y && \
 ENTRYPOINT ["/csi-vxflexos.sh"]
 # copy in the driver
 COPY --from=builder /go/src/csi-vxflexos /
+COPY --from=builder /go/bin/dlv /
 COPY "csi-vxflexos.sh" /
 RUN chmod +x /csi-vxflexos.sh
 LABEL vendor="Dell Inc." \

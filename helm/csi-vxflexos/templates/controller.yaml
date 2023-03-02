@@ -328,6 +328,8 @@ spec:
             - "--leader-election"
             - "--array-config=/vxflexos-config/config"
             - "--driver-config-params=/vxflexos-config-params/driver-config-params.yaml"
+          ports:
+          - containerPort: 40000
           env:
             - name: CSI_ENDPOINT
               value: /var/run/csi/csi.sock

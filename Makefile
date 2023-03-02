@@ -32,10 +32,10 @@ dependencies:
 
 # Build the driver locally
 build: dependencies
-	CGO_ENABLED=0 GOOS=linux GO111MODULE=on go build
+	CGO_ENABLED=0 GOOS=linux GO111MODULE=on go build -gcflags "all=-N -l"
 
 # Generates the docker container (but does not push)
-docker: dependencies
+docker:
 	make -f docker.mk docker
 
 # Pushes container to the repository

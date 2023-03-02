@@ -1,0 +1,5 @@
+[oracle-linux-8-baseos]
+name=Oracle Linux 8 - BaseOS
+baseurl=http://yum.oracle.com/repo/OracleLinux/OL8/baseos/latest/x86_64
+gpgcheck = 0
+enabled = 1
